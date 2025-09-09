@@ -16,6 +16,8 @@ interface User {
   name: string | null
   email: string
   role: "ADMIN" | "USER"
+  createdAt?: string
+  updatedAt?: string
 }
 
 export function UsersPage() {

@@ -9,17 +9,13 @@ An advanced electric grid monitoring dashboard built with React that visualizes 
 💡 Dynamic data display on click (e.g., transformers, substations, lines)
 
 📂 Left-side navigation menu with:
-
-*   Dashboard
-*   Grid Status
-*   Analytics
-*   Grid Map
-*   Alerts
-*   User Management
-*   Settings
-*   About
-*   Theme
-*   Data Management
+*   **Dashboard**: At-a-glance overview of key grid metrics.
+*   **Grid Status**: Detailed list and status of all grid assets.
+*   **Analytics**: In-depth charts and visualizations of grid data.
+*   **Grid Map**: Interactive map of all grid infrastructure.
+*   **Alerts**: Real-time system alerts and notifications.
+*   **User Management**: (Admin) Manage user accounts and roles.
+*   **Settings**: (Admin) Configure system settings and manage data.
 
 📊 Interactive Charts (Pie, Bar, etc.)
 
@@ -40,4 +36,4 @@ Charts: Recharts / Chart.js
 
 Backend: Next.js API Routes
 
-Database: Prisma + PostgreSQL
+Database: Prisma + SQLite

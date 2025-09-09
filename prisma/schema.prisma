@@ -31,7 +31,6 @@ resetTokenExpiry  DateTime?
 enum Role {
   USER
   ADMIN
-  SUPER_ADMIN
 }
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
@@ -43,6 +42,6 @@ generator client {
   provider = "prisma-client-js"
 }
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }

@@ -7,11 +7,12 @@ export default async function PostLoginRedirectPage() {
   if (!session) {
     redirect("/login");
   }
-  const role = session.user?.role;
-  if (role === "ADMIN") {
-    redirect("/admin");
+  const role = session.user?.role?.toLowerCase();
+
+  if (role === "admin") {
+    redirect("/dashboard/admin");
   }
-  redirect("/dashboard");
+
+  // All other authenticated users (e.g., 'user') go to the user dashboard.
+  redirect("/dashboard/user");
 }
-
-
