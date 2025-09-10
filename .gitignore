@@ -29,4 +29,4 @@ dev.db
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/lib/generated/prisma
+/lib/generated/prismaelectric-grid-dashboard-main/ 
