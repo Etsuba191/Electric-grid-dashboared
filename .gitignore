@@ -30,3 +30,7 @@ dev.db
 *.tsbuildinfo
 next-env.d.ts
 /lib/generated/prismaelectric-grid-dashboard-main/ 
+
+# BFG repo cleaner
+..bfg-report/
+bfg-1.15.0.jar
