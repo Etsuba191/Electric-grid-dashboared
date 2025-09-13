@@ -194,12 +194,22 @@ export function GridStatus({ assets }: GridStatusProps) {
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">
+                  {/* Always show Type, Address, and Voltage for all asset types */}
+                  <div className="flex justify-between">
+                    <span className="text-blue-600 dark:text-slate-400">Type:</span>
+                    <span className="text-slate-900 dark:text-white">{asset.type || asset.plant_type || asset.source || '-'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-600 dark:text-slate-400">Address:</span>
+                    <span className="text-slate-900 dark:text-white">{asset.address || asset.poletical || '-'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-blue-600 dark:text-slate-400">Elevation (m):</span>
+                    <span className="text-slate-900 dark:text-white">{asset.elevation !== undefined ? asset.elevation : '-'}</span>
+                  </div>
+                  {/* Existing details by type */}
                   {asset.source === "tower" ? (
                     <>
-                      <div className="flex justify-between">
-                        <span className="text-blue-600 dark:text-slate-400">Site:</span>
-                        <span className="text-slate-900 dark:text-white">{asset.site || "-"}</span>
-                      </div>
                       <div className="flex justify-between">
                         <span className="text-blue-600 dark:text-slate-400">Zone:</span>
                         <span className="text-slate-900 dark:text-white">{asset.zone || "-"}</span>

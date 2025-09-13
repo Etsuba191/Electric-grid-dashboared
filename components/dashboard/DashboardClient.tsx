@@ -11,6 +11,8 @@ import { GridStatus } from "@/components/pages/grid-status";
 import { Analytics } from "@/components/pages/analytics";
 import { AlertsPage } from "@/components/pages/alerts";
 import { UsersPage } from "@/components/pages/users";
+import { GridAssetsPage } from "@/components/pages/grid-assets";
+import { DeletedAssetsPage } from "@/components/pages/deleted-assets";
 import { SettingsPage } from "@/components/pages/settings";
 import { AboutPage } from "@/components/pages/about";
 import { Toaster } from "@/components/ui/toaster";
@@ -36,25 +38,26 @@ export default function DashboardClient({
   const [zoneData, setZoneData] = useState<ProcessedAsset | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchGridAssets = async () => {
+    try {
+      setLoading(true);
+      const data = await loadProcessedAssets();
+      setGridAssets(data || []);
+      setZoneData(null);
+    } catch (error) {
+      console.error("Failed to load grid assets:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     setSelectedDate(new Date());
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        const data = await loadProcessedAssets();
-        setGridAssets(data || []);
-        setZoneData(null);
-      } catch (error) {
-        console.error("Failed to load grid assets:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    loadData();
+    fetchGridAssets();
   }, []);
 
   const filteredGridAssets = useMemo(() => {
-    let data = gridAssets
+    let data = gridAssets.filter(asset => !asset.deleted)
 
     // Asset Type filter (global)
     if (filters.assetType) {
@@ -104,6 +107,10 @@ export default function DashboardClient({
         return <AlertsPage assets={ethiopianGridAssets} />;
       case "users":
         return <UsersPage />;
+      case "grid-assets":
+        return <GridAssetsPage gridAssets={gridAssets} fetchGridAssets={fetchGridAssets} />;
+      case "deleted-assets":
+        return <DeletedAssetsPage fetchGridAssets={fetchGridAssets} />;
       case "settings":
         return <SettingsPage assets={filteredGridAssets} />;
       case "about":

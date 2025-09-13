@@ -15,6 +15,7 @@ model GridAsset {
   woreda    String? // New field
   category  String? // New field
   nameLink  String? // New field
+  deleted   Boolean  @default(false)
 }
 model User {
   id           String   @id @default(uuid())

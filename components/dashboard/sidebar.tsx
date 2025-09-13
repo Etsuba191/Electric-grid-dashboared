@@ -19,9 +19,12 @@ import {
   Sun,
   Moon,
   Menu,
+  HardHat,
+  Trash2,
 } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import "./sidebar-scrollbar.css"
 
 interface SidebarProps {
   isOpen: boolean
@@ -50,6 +53,8 @@ export function Sidebar({ isOpen, onToggle, userRole, onRoleChange, currentPage,
     { id: "map", icon: Map, label: "Grid Map", admin: false },
     { id: "alerts", icon: Bell, label: "Alerts", admin: false },
     { id: "users", icon: Users, label: "User Management", admin: true },
+    { id: "grid-assets", icon: HardHat, label: "Grid Assets", admin: true },
+    { id: "deleted-assets", icon: Trash2, label: "Deleted Assets", admin: true },
     { id: "settings", icon: Settings, label: "Settings", admin: true },
     { id: "about", icon: Info, label: "About", admin: false },
   ]
@@ -57,7 +62,7 @@ export function Sidebar({ isOpen, onToggle, userRole, onRoleChange, currentPage,
   const filteredItems = menuItems.filter((item) => !item.admin || userRole === "admin")
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-blue-600 dark:bg-background border-r border-blue-700 dark:border-border">
+  <div className="flex flex-col h-full bg-blue-600 dark:bg-background border-r border-blue-700 dark:border-border">
       {/* Header */}
       <div className="p-4 border-b border-blue-700 dark:border-border">
         <div className="flex items-center justify-between">
@@ -100,7 +105,7 @@ export function Sidebar({ isOpen, onToggle, userRole, onRoleChange, currentPage,
       </div>
 
       {/* Navigation Menu */}
-      <nav className="flex-1 p-4 overflow-y-auto">
+  <nav className="flex-1 p-4 overflow-y-auto custom-scrollbar">
         <ul className="space-y-2">
           {filteredItems.map((item) => (
             <li key={item.id}>

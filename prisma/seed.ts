@@ -14,7 +14,22 @@ async function main() {
   console.log('Deleted all existing grid assets and users.');
 
   
-  for (const userData of users) {
+  const users = [
+  {
+    email: 'admin@example.com',
+    name: 'Admin User',
+    password: 'password',
+    role: Role.ADMIN,
+  },
+  {
+    email: 'user@example.com',
+    name: 'Regular User',
+    password: 'password',
+    role: Role.USER,
+  },
+];
+
+for (const userData of users) {
     const hashedPassword = await hash(userData.password, 12);
     const user = await prisma.user.create({
       data: {

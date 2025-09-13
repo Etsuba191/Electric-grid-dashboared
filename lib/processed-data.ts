@@ -2,6 +2,7 @@
 import { EthiopianGridAsset } from "@/lib/ethiopia-data"
 
 export interface ProcessedAsset {
+  deleted?: boolean
   properties: any
   id: string
   name?: string
@@ -31,6 +32,9 @@ export interface ProcessedAsset {
   // Transmission line specific fields
   line_voltage?: number
   line_length_km?: number
+
+  // Elevation (meters above sea level)
+  elevation?: number
 }
 
 // Load and process the GeoJSON data
@@ -68,7 +72,7 @@ export async function loadProcessedAssets(): Promise<ProcessedAsset[]> {
         const coords = feature.geometry?.coordinates
         if (coords && coords.length >= 2) {
           processedAssets.push({
-            id: ensureUniqueId(makeBaseId('tower', feature.properties?.Barcode ?? index)),
+            id: feature.properties?.OBJECTID.toString(),
             source: "tower",
             lat: coords[1],
             lng: coords[0],
@@ -81,6 +85,7 @@ export async function loadProcessedAssets(): Promise<ProcessedAsset[]> {
             name_link: feature.properties?.Link_Name,
             poletical: feature.properties?.Town || feature.properties?.Region,
             region: feature.properties?.Region,
+            elevation: feature.properties?.Elevation,
             properties: feature.properties,
           })
         }
@@ -93,7 +98,7 @@ export async function loadProcessedAssets(): Promise<ProcessedAsset[]> {
         const coords = feature.geometry?.coordinates
         if (coords && coords.length >= 2) {
           processedAssets.push({
-            id: ensureUniqueId(makeBaseId('substation', feature.properties?.NO_First ?? feature.properties?.Name_First ?? index)),
+            id: feature.properties?.ORIG_FID.toString(),
             source: "substation",
             lat: coords[1],
             lng: coords[0],
@@ -470,24 +475,24 @@ export function exportToCSV(data: ProcessedAsset[], filename: string = 'grid_ass
   const csvRows = [
     headers.join(','), // Header row
     ...data.map(asset => [
-      `"${asset.id || ''}"`,
-      `"${asset.name || ''}"`,
-      `"${asset.source || ''}"`,
-      asset.lat || '',
-      asset.lng || '',
-      `"${asset.status || ''}"`,
-      `"${asset.site || ''}"`,
-      `"${asset.zone || ''}"`,
-      `"${asset.woreda || ''}"`,
-      `"${asset.category || ''}"`,
-      `"${asset.poletical || ''}"`,
-      asset.voltage_le || '',
-      `"${asset.voltage_sp || ''}"`,
-      `"${asset.name_link || ''}"`,
-      `"${asset.plant_type || ''}"`,
-      asset.capacity_mw || '',
-      `"${asset.year_operational || ''}"`,
-      asset.line_voltage || '',
+      `"${asset.id || ''}"`, 
+      `"${asset.name || ''}"`, 
+      `"${asset.source || ''}"`, 
+      asset.lat || '', 
+      asset.lng || '', 
+      `"${asset.status || ''}"`, 
+      `"${asset.site || ''}"`, 
+      `"${asset.zone || ''}"`, 
+      `"${asset.woreda || ''}"`, 
+      `"${asset.category || ''}"`, 
+      `"${asset.poletical || ''}"`, 
+      asset.voltage_le || '', 
+      `"${asset.voltage_sp || ''}"`, 
+      `"${asset.name_link || ''}"`, 
+      `"${asset.plant_type || ''}"`, 
+      asset.capacity_mw || '', 
+      `"${asset.year_operational || ''}"`, 
+      asset.line_voltage || '', 
       asset.line_length_km || ''
     ].join(','))
   ]
